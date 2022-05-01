@@ -15,6 +15,13 @@ body {
 		.buttonArea {
 			display: flex;
 			justify-content: space-between;
+			.btn_normal {
+				font-family: monospace;
+			}
+			.btn_logout {
+				@extend .btn_normal;
+				color: red;
+			}
 		}
 
 		.jobs {
