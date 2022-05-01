@@ -1,11 +1,13 @@
-$color_skills: rgb(232, 232, 152);
+$color_skills: yellow;
+$fontSize_small: 0.8rem;
+$fontSize_medium: 1.2rem;
+$fontSize_large: 1.5rem;
 
 body {
 	background-color: #333;
 	padding: 0 30px;
 
 	.App {
-		font-size: 1.5rem;
 		color: #ccc;
 
 		h1 {
@@ -33,13 +35,14 @@ body {
 				.position {
 					a {
 						color: rgb(177, 110, 33);
+						font-size: $fontSize_large;
 					}
 				}
 
 				.status {
 					color: #ccc;
 					font-family: monospace;
-					font-size: 1.5rem;
+					font-size: $fontSize_large;
 					background-color: #666;
 					border: 0;
 					border-radius: 5px;
@@ -50,20 +53,20 @@ body {
 			}
 
 			.skills {
-				font-size: 1.2rem;
+				font-size: $fontSize_medium;
 				color: $color_skills;
 			}
 
 			.bulkText {
-				font-size: 0.9rem;
+				font-size: $fontSize_small;
 			}
 
 			ul.skillDefinitions {
 				margin: 10px 0 0 0;
 
 				li {
-					font-size: 0.9rem;
-					color: $color_skills; 
+					font-size: $fontSize_small;
+					color: $color_skills;
 				}
 			}
 		}
@@ -120,7 +123,7 @@ body {
 				padding: 20px;
 
 				legend {
-					font-size: 1.2rem;
+					font-size: $fontSize_medium;
 				}
 
 				.row {
@@ -188,7 +191,7 @@ body {
 					}
 
 					div.info {
-						font-size: 0.9rem;
+						font-size: $fontSize_small;
 						color: yellow;
 					}
 
@@ -207,12 +210,12 @@ body {
 					.field_bulkText {
 						width: 800px;
 						height: 100px;
-						font-size: 1.2rem;
+						font-size: $fontSize_medium;
 					}
 				}
 
 				button {
-					font-size: 1.2rem;
+					font-size: $fontSize_medium;
 					margin: 10px 0 0 0;
 				}
 			}
@@ -221,7 +224,7 @@ body {
 				background: #444;
 				padding: 1px 10px;
 				margin: 20px 0 0 0;
-				font-size: 0.9rem;
+				font-size: $fontSize_small;
 				color: rgb(185, 157, 86);
 
 				pre {
