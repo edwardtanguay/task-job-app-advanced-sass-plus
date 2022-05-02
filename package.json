@@ -4,10 +4,12 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --port=3555",
+    "api": "json-server --watch ./src/data/jobsData.json --port 5555",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "json-server": "^0.17.0",
     "md5": "^2.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

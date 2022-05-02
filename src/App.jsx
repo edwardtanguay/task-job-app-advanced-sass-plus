@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import './styles/App.scss';
-import jobsData from './data/jobsData.json';
+import db from './data/db.json';
 import { JobsFull } from './components/JobsFull';
 import { JobsList } from './components/JobsList';
 import md5 from 'md5';
 import { AddJob } from './components/AddJob';
 
-const _jobs = jobsData.jobs;
+const _jobs = db.jobs;
 
 _jobs.forEach((job) => {
 	job.status = 'accepted';
