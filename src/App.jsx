@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import './styles/App.scss';
-import db from './data/db.json';
 import { JobsFull } from './components/JobsFull';
 import { JobsList } from './components/JobsList';
 import md5 from 'md5';
@@ -173,7 +172,7 @@ function App() {
 						/>
 					)}
 					{displayKind === 'list' && <JobsList jobs={jobs} />}
-					{displayKind === 'addJob' && <AddJob />}
+					{displayKind === 'addJob' && <AddJob jobsUrl={jobsUrl} />}
 				</>
 			) : (
 				<form>

@@ -4,7 +4,7 @@ import db from '../data/db.json';
 
 const jobSites = db.jobSites; 
 
-export const AddJob = () => {
+export const AddJob = ({jobsUrl}) => {
 	const [formData, setFormData] = useState({});
 	const {
 		register,
@@ -25,6 +25,20 @@ export const AddJob = () => {
 			setValue('skills', 'React, JavaScript, HTML, CSS');
 		}
 	}, [watch('position')]);
+
+	const handleAddJobButton = async () => {
+		console.log(formData);
+		const requestOptions = {
+			method: 'POST',
+			body: JSON.stringify(formData),
+			headers: { 'Content-type': 'application/json; charset=UTF-8' },
+		};
+		try {
+			await fetch(jobsUrl, requestOptions);
+		} catch (e) {
+			console.log(e.message);
+		}
+	}
 
 	return (
 		<div className="page_addJob">
@@ -102,7 +116,7 @@ export const AddJob = () => {
 						/>
 						<div className="info">{errors.bulkText?.message}</div>
 					</div>
-					<button disabled={Object.keys(errors).length}>Add the Job</button>
+					<button onClick={handleAddJobButton} disabled={Object.keys(errors).length}>Add the Job</button>
 
 					{Object.keys(formData).length > 0 && (
 						<div className="formData">
