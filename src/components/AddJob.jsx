@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import db from '../data/db.json';
 
-const jobSites = db.jobSites; 
+const jobSites = db.jobSites;
 
-export const AddJob = ({jobsUrl}) => {
+const defaultSkills = 'HTML, CSS, JavaScript, React';
+
+export const AddJob = ({ jobsUrl }) => {
 	const [formData, setFormData] = useState({});
 	const {
 		register,
@@ -14,7 +16,7 @@ export const AddJob = ({jobsUrl}) => {
 		formState: { errors },
 	} = useForm({
 		defaultValues: {
-			skills: 'HTML, CSS, JavaScript, React',
+			skills: defaultSkills 
 		},
 	});
 
@@ -38,7 +40,23 @@ export const AddJob = ({jobsUrl}) => {
 		} catch (e) {
 			console.log(e.message);
 		}
-	}
+	};
+
+	const clearForm = () => {
+		setValue('position', '');
+		setValue('url', '');
+		setValue('skills', defaultSkills);
+		setValue('bulkText', '');
+	};
+
+	useEffect(() => {
+		if (Object.keys(formData).length > 0) {
+			formData.status = 'send';
+			handleAddJobButton();
+			setFormData({});
+			clearForm();
+		}
+	}, [formData]);
 
 	return (
 		<div className="page_addJob">
@@ -116,11 +134,15 @@ export const AddJob = ({jobsUrl}) => {
 						/>
 						<div className="info">{errors.bulkText?.message}</div>
 					</div>
-					<button onClick={handleAddJobButton} disabled={Object.keys(errors).length}>Add the Job</button>
+					<button disabled={Object.keys(errors).length}>
+						Add the Job
+					</button>
 
 					{Object.keys(formData).length > 0 && (
 						<div className="formData">
-							<div className="info">This will be sent to the backend:</div>
+							<div className="info">
+								This will be sent to the backend:
+							</div>
 							<pre>{JSON.stringify(formData, null, 2)}</pre>
 						</div>
 					)}

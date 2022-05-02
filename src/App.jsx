@@ -73,6 +73,7 @@ function App() {
 			displayKindIndex = 0;
 		}
 		setDisplayKind(displayKinds[displayKindIndex]);
+		loadJobs();
 	};
 
 	const saveJobToDb = async (job) => {
