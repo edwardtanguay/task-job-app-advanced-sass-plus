@@ -6,11 +6,7 @@ import { JobsList } from './components/JobsList';
 import md5 from 'md5';
 import { AddJob } from './components/AddJob';
 
-const _jobs = db.jobs;
-
-_jobs.forEach((job) => {
-	job.status = 'accepted';
-});
+const jobsUrl = 'http://localhost:4555/jobs';
 
 const techItemsUrl = 'https://edwardtanguay.netlify.app/share/techItems.json';
 
@@ -31,7 +27,6 @@ function App() {
 		if (displayKind !== '') {
 			const jobAppState = {
 				displayKind,
-				jobs,
 			};
 			localStorage.setItem('jobAppState', JSON.stringify(jobAppState));
 		}
@@ -41,10 +36,8 @@ function App() {
 		const jobAppState = JSON.parse(localStorage.getItem('jobAppState'));
 		if (jobAppState === null) {
 			setDisplayKind('list');
-			setJobs(_jobs);
 		} else {
 			setDisplayKind(jobAppState.displayKind);
-			setJobs(jobAppState.jobs);
 		}
 	};
 
@@ -56,14 +49,23 @@ function App() {
 		})();
 	};
 
+	const loadJobs = async () => {
+		(async () => {
+			const response = await fetch(jobsUrl);
+			const _jobs = await response.json();
+			setJobs(_jobs);
+		})();
+	};
+
 	useEffect(() => {
+		loadJobs();
 		loadLocalStorage();
 		loadTechItems();
 	}, []);
 
 	useEffect(() => {
 		saveToLocalStorage();
-	}, [displayKind, jobs]);
+	}, [displayKind]);
 
 	const handleToggleView = () => {
 		let displayKindIndex = displayKinds.indexOf(displayKind);
@@ -74,6 +76,19 @@ function App() {
 		setDisplayKind(displayKinds[displayKindIndex]);
 	};
 
+	const saveJobToDb = async (job) => {
+		const requestOptions = {
+			method: 'PUT',
+			body: JSON.stringify(job),
+			headers: { 'Content-type': 'application/json; charset=UTF-8' },
+		};
+		try {
+			await fetch(jobsUrl + '/' + job.id, requestOptions);
+		} catch (e) {
+			console.log(e.message);
+		}
+	};
+
 	const handleStatusChange = (job) => {
 		let statusIndex = statuses.indexOf(job.status);
 		statusIndex++;
@@ -81,6 +96,7 @@ function App() {
 			statusIndex = 0;
 		}
 		job.status = statuses[statusIndex];
+		saveJobToDb(job);
 		setJobs([...jobs]);
 	};
 
@@ -135,11 +151,19 @@ function App() {
 				<>
 					<div className="buttonArea">
 						{userGroup === 'fullAccessMembers' && (
-							<button className="btn_normal" onClick={handleToggleView}>
+							<button
+								className="btn_normal"
+								onClick={handleToggleView}
+							>
 								Toggle View
 							</button>
 						)}
-						<button className="btn_logout" onClick={handleLogoutButton}>Logout</button>
+						<button
+							className="btn_logout"
+							onClick={handleLogoutButton}
+						>
+							Logout
+						</button>
 					</div>
 					{displayKind === 'full' && (
 						<JobsFull
