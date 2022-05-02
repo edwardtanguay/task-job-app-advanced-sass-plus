@@ -1,9 +1,10 @@
-@import "./variables_default.scss";
-// @import "./variables_customer001.scss";
+@import './functions.scss';
+@import './variables_default.scss';
+// @import './variables_customer001.scss';
 
 body {
 	background-color: #333;
-	padding: 0 30px;
+	padding: 0 sum(20px, $siteIndent);
 
 	.App {
 		color: #ccc;
